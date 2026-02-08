@@ -59,5 +59,35 @@ export const investigationRepository = {
     } else {
       mockStorage[STORAGE_KEY_ACTIVE_ID] = id;
     }
+  },
+
+  async addNodeToActiveInvestigation(nodeData) {
+    const activeId = await this.getActiveId();
+    if (!activeId) {
+      throw new Error("No active investigation selected");
+    }
+
+    const investigations = await this.getAll();
+    const investigationIndex = investigations.findIndex(inv => inv.id === activeId);
+
+    if (investigationIndex === -1) {
+      throw new Error("Active investigation not found");
+    }
+
+    const newNode = {
+      id: uuidv4(),
+      timestamp: new Date().toISOString(),
+      ...nodeData
+    };
+
+    investigations[investigationIndex].nodes.push(newNode);
+
+    if (isExtension) {
+      await chrome.storage.local.set({ [STORAGE_KEY_INVESTIGATIONS]: investigations });
+    } else {
+      mockStorage[STORAGE_KEY_INVESTIGATIONS] = investigations;
+    }
+
+    return newNode;
   }
 };
