@@ -12,11 +12,30 @@
   min-height: 100vh;
 }
 
-header h1 {
-  font-size: 1.5rem;
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 16px;
+}
+
+header h1 {
+  font-size: 1.2rem;
+  margin: 0;
   color: #2c3e50;
+  flex-grow: 1;
   text-align: center;
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  color: #3498db;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.9rem;
+  text-align: left;
+  width: auto;
 }
 
 .create-section {
@@ -144,4 +163,114 @@ button:hover {
   text-align: center;
   padding: 20px;
   color: #666;
+}
+
+/* Timeline Styles */
+.timeline-section {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.timeline-desc {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 20px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.timeline-marker {
+  position: absolute;
+  left: -24px;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  background-color: #3498db;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 0 1px #3498db;
+}
+
+.timeline-connector {
+  position: absolute;
+  left: -18px;
+  top: 12px;
+  width: 2px;
+  height: calc(100% + 10px);
+  background-color: #ddd;
+}
+
+.timeline-content {
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #eee;
+}
+
+.node-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.node-type {
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: white;
+}
+
+.type-webpage { background-color: #9b59b6; }
+.type-text_selection { background-color: #f1c40f; color: #333; }
+.type-code_block { background-color: #34495e; }
+.type-image { background-color: #e67e22; }
+
+.node-time {
+  font-size: 0.75rem;
+  color: #999;
+}
+
+.node-body {
+  margin-bottom: 6px;
+}
+
+.node-text {
+  font-size: 0.9rem;
+  margin: 0;
+  word-break: break-word;
+}
+
+.node-source {
+  display: block;
+  font-size: 0.75rem;
+  color: #3498db;
+  margin-top: 4px;
+  text-decoration: none;
+}
+
+.node-source:hover {
+  text-decoration: underline;
+}
+
+.node-note {
+  background: #fff3cd;
+  padding: 6px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #856404;
+  border: 1px solid #ffeeba;
 }

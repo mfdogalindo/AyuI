@@ -38,7 +38,8 @@ export const investigationRepository = {
       description,
       createdAt: new Date().toISOString(),
       nodes: [],
-      edges: []
+      edges: [],
+      lastActiveNodeId: null
     };
 
     const investigations = await this.getAll();
@@ -80,7 +81,20 @@ export const investigationRepository = {
       ...nodeData
     };
 
-    investigations[investigationIndex].nodes.push(newNode);
+    const activeInv = investigations[investigationIndex];
+
+    if (activeInv.lastActiveNodeId) {
+      const newEdge = {
+        sourceId: activeInv.lastActiveNodeId,
+        targetId: newNode.id,
+        relation: "navigation"
+      };
+      if (!activeInv.edges) activeInv.edges = [];
+      activeInv.edges.push(newEdge);
+    }
+
+    activeInv.nodes.push(newNode);
+    activeInv.lastActiveNodeId = newNode.id;
 
     if (isExtension) {
       await chrome.storage.local.set({ [STORAGE_KEY_INVESTIGATIONS]: investigations });
