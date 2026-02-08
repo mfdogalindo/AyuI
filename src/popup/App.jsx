@@ -4,6 +4,7 @@ import { investigationRepository } from '../lib/storage';
 import { InvestigationForm } from './components/InvestigationForm';
 import { InvestigationList } from './components/InvestigationList';
 import { Timeline } from './components/Timeline';
+import { generateExportData } from '../lib/export';
 
 function App() {
   const [investigations, setInvestigations] = useState([]);
@@ -61,6 +62,23 @@ function App() {
     setView('list');
   };
 
+  const handleDownload = () => {
+    if (!activeInvestigation) return;
+
+    const jsonString = generateExportData(activeInvestigation);
+    if (!jsonString) return;
+
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `investigation-${activeInvestigation.title.replace(/\s+/g, '-')}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   if (loading) {
     return <div className="loading">Loading...</div>;
   }
@@ -72,6 +90,15 @@ function App() {
           <button className="btn-back" onClick={handleBack}>&larr; Back</button>
         )}
         <h1>Graph-Navigator</h1>
+        {view === 'timeline' && (
+          <button className="btn-download" onClick={handleDownload} title="Download JSON">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+          </button>
+        )}
       </header>
       <main>
         {view === 'list' ? (

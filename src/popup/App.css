@@ -38,6 +38,24 @@ header h1 {
   width: auto;
 }
 
+.btn-download {
+  background: none;
+  border: none;
+  color: #3498db;
+  cursor: pointer;
+  padding: 4px;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.btn-download:hover {
+  background-color: #f0f4f8;
+  color: #2980b9;
+}
+
 .create-section {
   background: white;
   padding: 16px;
